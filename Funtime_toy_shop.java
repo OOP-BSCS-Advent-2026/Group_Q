@@ -5,18 +5,18 @@ public class Funtime_toy_shop {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // 1. Arrays storing item names and prices
+        // 1. An array to show items and prices
         String[] itemNames = {"Doll", "Toy Car", "Puzzle", "Ball"};
         double[] itemPrices = {12000.00, 8000.00, 6000.00, 5000.00};
         int[] quantities = new int[itemNames.length];
 
-        // 2. Display Price List using a loop
+        // 2. For displaying price list using loops
         System.out.println("FUNTIME TOY SHOP");
         for (int i = 0; i < itemNames.length; i++) {
             System.out.printf("%d. %-10s UGX %.2f%n", (i + 1), itemNames[i], itemPrices[i]);
         }
 
-        // Prompt user to enter quantities for each item
+        // Prompt user to enter quantities for each the items
         System.out.println("\n ENTER QUANTITIES");
         for (int i = 0; i < itemNames.length; i++) {
             System.out.print("Enter quantity for " + itemNames[i] + ": ");
@@ -28,14 +28,14 @@ public class Funtime_toy_shop {
         String[] discountNotes = new String[itemNames.length];
         double grandTotal = 0.0;
 
-        // 3 & 4. Calculate subtotals with discounts and sum grand total
+        //  Calculate subtotals with discounts and sum grand total
         for (int i = 0; i < itemNames.length; i++) {
             subtotals[i] = calculateSubtotal(i, itemPrices[i], quantities[i]);
             discountNotes[i] = getDiscountNote(i, quantities[i]);
             grandTotal += subtotals[i];
         }
 
-        // 5 & 6. Print itemized receipt using Method 2
+        //  Print itemized receipt using Method 2
         printReceipt(itemNames, quantities, subtotals, discountNotes, grandTotal);
 
         scanner.close();

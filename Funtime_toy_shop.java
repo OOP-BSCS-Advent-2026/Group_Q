@@ -96,7 +96,7 @@ public class Funtime_toy_shop {
         for (int i = 0; i < names.length; i++) {
             System.out.printf("%-8s x%d = UGX %10.2f %s%n", names[i], quantities[i], subtotals[i], notes[i]);
         }
-        System.out.println("-------------------------------------------");
+        
 
         System.out.printf("TOTAL    = UGX %.2f%n", grandTotal);
     }

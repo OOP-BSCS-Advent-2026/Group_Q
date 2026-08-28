@@ -72,6 +72,7 @@ public class Funtime_toy_shop {
     /**
      * Helper method to supply descriptions for the receipt output lines
      */
+    // originally used switch case but changed it to use if else statements for a better understanding of the code343
    public static String getDiscountNote(int itemIndex, int quantity) {
     if (itemIndex == 0) {
         return quantity >= 3 ? "(5% discount)" : "";
@@ -84,7 +85,7 @@ public class Funtime_toy_shop {
          } 
          else {
         return "";
-        
+
          }
      }
     

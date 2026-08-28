@@ -1,3 +1,4 @@
+This project is for a funtime toy store showing the pricing and it calculates the final amount on the recipt per customer as seen below
 START
     // Step 1: Initialize arrays for item details and Scanner
     SET itemNames = ["Doll", "Toy Car", "Puzzle", "Ball"]

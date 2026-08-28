@@ -72,18 +72,21 @@ public class Funtime_toy_shop {
     /**
      * Helper method to supply descriptions for the receipt output lines
      */
-    public static String getDiscountNote(int itemIndex, int quantity) {
-        switch (itemIndex) {
-            case 0:
-                return quantity >= 3 ? "(5% discount)" : "";
-            case 2:
-                return quantity >= 4 ? "(UGX 1,000 discount)" : "";
-            case 3:
-                return quantity >= 6 ? "(10% discount)" : "";
-            default:
-                return "";
-        }
-    }
+   public static String getDiscountNote(int itemIndex, int quantity) {
+    if (itemIndex == 0) {
+        return quantity >= 3 ? "(5% discount)" : "";
+         } 
+         else if (itemIndex == 2) {
+        return quantity >= 4 ? "(UGX 1,000 discount)" : "";
+         } 
+         else if (itemIndex == 3) {
+        return quantity >= 6 ? "(10% discount)" : "";
+         } 
+         else {
+        return "";
+        
+         }
+     }
     
     /**
      * Method 2: Prints the formatted receipt

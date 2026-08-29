@@ -72,16 +72,19 @@ public class Funtime_toy_shop {
     /**
      * Helper method to supply descriptions for the receipt output lines
      */
-    // originally used switch case but changed it to use if else statements for a better understanding of the code343
+    //originally used switch case but changed it to use if else statements for better readability
    public static String getDiscountNote(int itemIndex, int quantity) {
     if (itemIndex == 0) {
-        return quantity >= 3 ? "(5% discount)" : "";
+        return quantity >= 3 ? "(5% discount applied)" : "(no discount - fewer than 3)";
          } 
+         else if (itemIndex == 1){
+            return "(no discount available)";
+         }
          else if (itemIndex == 2) {
-        return quantity >= 4 ? "(UGX 1,000 discount)" : "";
+        return quantity >= 4 ? "(UGX 1,000 discount applied)" : "(no discount - fewer than 4)";
          } 
          else if (itemIndex == 3) {
-        return quantity >= 6 ? "(10% discount)" : "";
+        return quantity >= 6 ? "(10% discount applied)" : "(no discount - fewer than 6)";
          } 
          else {
         return "";
@@ -98,7 +101,7 @@ public class Funtime_toy_shop {
             System.out.printf("%-8s x%d = UGX %10.2f %s%n", names[i], quantities[i], subtotals[i], notes[i]);
         }
 
-
+        System.out.println("----------------------------------------");
         System.out.printf("TOTAL    = UGX %.2f%n", grandTotal);
     }
 }

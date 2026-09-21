@@ -18,7 +18,7 @@ public class Main {
                 System.out.printf("%d. %-10s UGX %.2f%n", (i + 1), items[i].getName(), items[i].getPrice());
             }
 
-            // Prompt user to enter quantities
+            // ask user to enter quantities
             System.out.println("\n ENTER QUANTITIES");
             for (int i = 0; i < items.length; i++) {
                 int qty = -1;

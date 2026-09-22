@@ -23,7 +23,7 @@ public class Funtime_toy_shop {
             quantities[i] = scanner.nextInt();
         }
 
-        // Arrays to hold output results for receipt generation
+        // Arrays to hold output results for receipt
         double[] subtotals = new double[itemNames.length];
         String[] discountNotes = new String[itemNames.length];
         double grandTotal = 0.0;

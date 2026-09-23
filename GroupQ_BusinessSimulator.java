@@ -1,115 +1,107 @@
-
+import java.util.Scanner;
 
 public class GroupQ_BusinessSimulator {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        // ---- Step 1: store items and prices in arrays (not separate variables) ----
+        // 1. An array to show items and pricess
         String[] itemNames = {"Doll", "Toy Car", "Puzzle", "Ball"};
         double[] itemPrices = {12000.00, 8000.00, 6000.00, 5000.00};
+        int[] quantities = new int[itemNames.length];
 
-        // ---- Step 3: quantities, set directly in code for this version ----
-        int[] quantities = {2, 2, 3, 6};
-
-        // ---- Step 2: display the price list, built from the arrays with a loop ----
-        displayPriceList(itemNames, itemPrices);
-
-        // ---- Steps 4-6: build and print the receipt ----
-        printReceipt(itemNames, itemPrices, quantities);
-    }
-
-    /**
-     * Custom method #1.
-     * Loops over the arrays and prints a formatted price list.
-     * Demonstrates: loops + arrays (Grading: Arrays, Loops).
-     */
-    public static void displayPriceList(String[] names, double[] prices) {
-        System.out.println("==== FUNTIME TOY SHOP ====");
-        for (int i = 0; i < names.length; i++) {
-            System.out.printf("%d. %s UGX %.2f%n", (i + 1), names[i], prices[i]);
-        }
-        System.out.println();
-    }
-
-    /**
-     * Custom method #2.
-     * Calculates ONE item's subtotal (price x quantity) and applies
-     * that specific item's discount rule if it qualifies.
-     * This is where the if/else decision logic lives (Grading: Decisions).
-     *
-     * @param itemIndex position of the item in the arrays (0 = Doll, 1 = Toy Car,
-     *                   2 = Puzzle, 3 = Ball)
-     * @param price     unit price of the item
-     * @param qty       quantity being bought
-     * @return          the discounted subtotal for that item
-     */
-    public static double calculateSubtotal(int itemIndex, double price, int qty) {
-        double subtotal = price * qty;
-
-        if (itemIndex == 0) {
-            // Doll: 3 or more -> 5% off
-            if (qty >= 3) {
-                subtotal = subtotal - (subtotal * 0.05);
-            }
-        } else if (itemIndex == 1) {
-            // Toy Car: no deal, ever — nothing to do
-        } else if (itemIndex == 2) {
-            // Puzzle: 4 or more -> flat UGX 1,000 off
-            if (qty >= 4) {
-                subtotal = subtotal - 1000.00;
-            }
-        } else if (itemIndex == 3) {
-            // Ball: 6 or more -> 10% off
-            if (qty >= 6) {
-                subtotal = subtotal - (subtotal * 0.10);
-            }
+        // 2. For displaying price list using loops
+        System.out.println("FUNTIME TOY SHOP");
+        for (int i = 0; i < itemNames.length; i++) {
+            System.out.printf("%d. %-10s UGX %.2f%n", (i + 1), itemNames[i], itemPrices[i]);
         }
 
-        return subtotal;
-    }
-
-    /**
-     * Custom method #3.
-     * Works out the discount message shown on each receipt line, so the
-     * receipt reads the same way as the worked example in the brief.
-     */
-    public static String getDiscountNote(int itemIndex, int qty) {
-        switch (itemIndex) {
-            case 0:
-                return (qty >= 3) ? "5% discount applied" : "no discount — fewer than 3";
-            case 1:
-                return "no discount — never on sale";
-            case 2:
-                return (qty >= 4) ? "UGX 1,000 discount applied" : "no discount — fewer than 4";
-            case 3:
-                return (qty >= 6) ? "10% discount applied" : "no discount — fewer than 6";
-            default:
-                return "";
+        // Prompt user to enter quantities for each the items
+        System.out.println("\n ENTER QUANTITIES");
+        for (int i = 0; i < itemNames.length; i++) {
+            System.out.print("Enter quantity for " + itemNames[i] + ": ");
+            quantities[i] = scanner.nextInt();
         }
-    }
 
-    /**
-     * Custom method #4.
-     * Builds the full itemised receipt: one line per item (quantity,
-     * subtotal, discount status), then the grand total.
-     * Ties everything together (Grading: Methods, Loops, Correctness).
-     */
-    public static void printReceipt(String[] names, double[] prices, int[] quantities) {
-        System.out.println("==== RECEIPT ====");
-
+        // Arrays to hold output results for receipt
+        double[] subtotals = new double[itemNames.length];
+        String[] discountNotes = new String[itemNames.length];
         double grandTotal = 0.0;
 
-        for (int i = 0; i < names.length; i++) {
-            double subtotal = calculateSubtotal(i, prices[i], quantities[i]);
-            String note = getDiscountNote(i, quantities[i]);
-
-            System.out.printf("%s x%d = UGX %.2f (%s)%n",
-                    names[i], quantities[i], subtotal, note);
-
-            grandTotal = grandTotal + subtotal;
+        //  Calculate subtotals with discounts and sum grand total
+        for (int i = 0; i < itemNames.length; i++) {
+            subtotals[i] = calculateSubtotal(i, itemPrices[i], quantities[i]);
+            discountNotes[i] = getDiscountNote(i, quantities[i]);
+            grandTotal += subtotals[i];
         }
 
-        System.out.println("----------------------------------------------------");
-        System.out.printf("TOTAL = UGX %.2f%n", grandTotal);
+        //  Print itemized receipt using Method 2
+        printReceipt(itemNames, quantities, subtotals, discountNotes, grandTotal);
+
+        scanner.close();
+    }
+
+    /**
+     * Method 1: Calculates the subtotal for an item applying specific discount rules
+     */
+    public static double calculateSubtotal(int itemIndex, double price, int quantity) {
+        double total = price * quantity;
+
+        switch (itemIndex) {
+            case 0: // Doll: buy 3 or more, gets 5% off
+                if (quantity >= 3) {
+                    total -= total * 0.05;
+                }
+                break;
+            case 1: // Toy Car: no deal
+                break;
+            case 2: // Puzzle: buy 4 or more, UGX 1,000 comes straight off
+                if (quantity >= 4) {
+                    total -= 1000.00;
+                }
+                break;
+            case 3: // Ball: buy 6 or more, gets 10% off
+                if (quantity >= 6) {
+                    total -= total * 0.10;
+                }
+                break;
+        }
+        return total;
+    }
+
+    /**
+     * Helper method to supply descriptions for the receipt output lines
+     */
+    //originally used switch case but changed it to use if else statements for better readability
+   public static String getDiscountNote(int itemIndex, int quantity) {
+    if (itemIndex == 0) {
+        return quantity >= 3 ? "(5% discount applied)" : "(no discount - fewer than 3)";
+         } 
+         else if (itemIndex == 1){
+            return "(no discount available)";
+         }
+         else if (itemIndex == 2) {
+        return quantity >= 4 ? "(UGX 1,000 discount applied)" : "(no discount - fewer than 4)";
+         } 
+         else if (itemIndex == 3) {
+        return quantity >= 6 ? "(10% discount applied)" : "(no discount - fewer than 6)";
+         } 
+         else {
+        return "";
+
+         }
+     }
+    
+    /**
+     * Method 2: Prints the formatted receipt
+     */
+    public static void printReceipt(String[] names, int[] quantities, double[] subtotals, String[] notes, double grandTotal) {
+        System.out.println("\n RECEIPT ");
+        for (int i = 0; i < names.length; i++) {
+            System.out.printf("%-8s x%d = UGX %10.2f %s%n", names[i], quantities[i], subtotals[i], notes[i]);
+        }
+
+        System.out.println("----------------------------------------");
+        System.out.printf("TOTAL    = UGX %.2f%n", grandTotal);
     }
 }
